@@ -39,22 +39,23 @@ int findOddBad(vector<int> v) {
 }
 
 // Always completes 1 full scan of the array
+// Perform bit-wise XOR all elements together
+// Background:
+//  1.) XOR is an associative operation
+//  2.) n XOR n = 0 (any number XOR itself is 0)
+//  3.) n XOR 0 = n (any number XOR 0 is itself)
+// Explanation:
+//  The XOR of all even-count elements together is 0 because of (2).
+//  The XOR of all odd-count elements together is "n" because of (2)
+//  and (3).
+//  Performing this operations can occur in any order because of (1),
+//  so we can just intuitively XOR from the beginning to the end.
 // Much better than the previous, but still a little "old-fashioned"
 int findOddBetter(vector<int> v) {
   // Accumulate partial results in tmp
   int tmp = 0;
 
-  // Perform bit-wise XOR all elements together
-  // Background:
-  //  1.) XOR is an associative operation
-  //  2.) n XOR n = 0 (any number XOR itself is 0)
-  //  3.) n XOR 0 = n (any number XOR 0 is itself)
-  // Explanation:
-  //  The XOR of all even-count elements together is 0 because of (2).
-  //  The XOR of all odd-count elements together is "n" because of (2)
-  //  and (3).
-  //  Performing this operations can occur in any order because of (1),
-  //  so we can just intuitively XOR from the beginning to the end.
+  // Bit-wise XOR of all elements
   for (auto i : v) {
     tmp ^= i;
   }
@@ -66,6 +67,7 @@ int findOddBetter(vector<int> v) {
 // Performs the same operation as the above, but we're making use of
 // the STL!
 int findOddBest(vector<int> v) {
+  // Bit-wise XOR of all elements
   return accumulate(begin(v), end(v), 0, bit_xor<int>());
 }
 
