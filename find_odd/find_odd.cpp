@@ -82,13 +82,13 @@ int findOddBest17(vector<int> v) {
 
 int main() {
   // Create a vector
-  vector<int> v1 = {2, 2, 3, 4, 4, 1, 1, 3, 4};
+  vector<int> v = {2, 2, 3, 4, 4, 1, 1, 3, 4};
 
-  // Get 3 solutions using our 3 functions
-  int sol1 = findOddBad(v1);
-  int sol2 = findOddBetter(v1);
-  int sol3 = findOddBest(v1);
-  int sol4 = findOddBest17(v1);
+  // Get 4 solutions using our 4 functions
+  int sol1 = findOddBad(v);
+  int sol2 = findOddBetter(v);
+  int sol3 = findOddBest(v);
+  int sol4 = findOddBest17(v);
 
   // Print out the results
   cout << "sol1 == " << sol1 << endl;
