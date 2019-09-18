@@ -41,7 +41,7 @@ int findOddBad(vector<int> v) {
 // Always completes 1 full scan of the array
 // Perform bit-wise XOR all elements together
 // Background:
-//  1.) XOR is an associative operation
+//  1.) XOR is an associative and commutative operation
 //  2.) n XOR n = 0 (any number XOR itself is 0)
 //  3.) n XOR 0 = n (any number XOR 0 is itself)
 // Explanation:
