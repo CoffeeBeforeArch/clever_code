@@ -46,7 +46,7 @@ int findOddBetter(vector<int> v) {
 
   // Perform bit-wise XOR all elements together
   // Background:
-  //  1.) XOR is an associative operation
+  //  1.) XOR is a commutative and associative operation
   //  2.) n XOR n = 0 (any number XOR itself is 0)
   //  3.) n XOR 0 = n (any number XOR 0 is itself)
   // Explanation:
