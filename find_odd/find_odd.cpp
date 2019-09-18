@@ -12,6 +12,7 @@ using std::accumulate;
 using std::bit_xor;
 using std::cout;
 using std::endl;
+using std::reduce;
 using std::vector;
 
 // Bad implementation of findOdd
@@ -71,6 +72,14 @@ int findOddBest(vector<int> v) {
   return accumulate(begin(v), end(v), 0, bit_xor<int>());
 }
 
+// Last implementation was great, but slightly non-intuitive because we
+// associate accumulate with addition.
+// How about something that's more C++17-style?
+int findOddBest17(vector<int> v) {
+  // Bit-wise XOR of all elements
+  return reduce(begin(v), end(v), 0, bit_xor<int>());
+}
+
 int main() {
   // Create a vector
   vector<int> v1 = {2, 2, 3, 4, 4, 1, 1, 3, 4};
@@ -79,11 +88,13 @@ int main() {
   int sol1 = findOddBad(v1);
   int sol2 = findOddBetter(v1);
   int sol3 = findOddBest(v1);
+  int sol4 = findOddBest17(v1);
 
   // Print out the results
   cout << "sol1 == " << sol1 << endl;
   cout << "sol2 == " << sol2 << endl;
   cout << "sol3 == " << sol3 << endl;
+  cout << "sol4 == " << sol4 << endl;
 
   return 0;
 }
