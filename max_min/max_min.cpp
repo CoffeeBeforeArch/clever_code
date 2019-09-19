@@ -53,9 +53,9 @@ int findRangeBest(vector<int> v) {
 // Using structured bindings (C++17) we can unpack the pair early!
 int findRangeBest17(vector<int> v) {
   // Get a pair of the min and max element and unpack it
-  auto [a, b] = minmax_element(begin(v), end(v));
+  auto [min, max] = minmax_element(begin(v), end(v));
   // Return the difference of the elements
-  return *b - *a;
+  return *max - *min;
 }
 
 int main() {
