@@ -4,14 +4,14 @@
 
 #include <algorithm>
 #include <cstdlib>
-#include <vector>
 #include <iostream>
+#include <vector>
 
+using std::cout;
+using std::endl;
 using std::max;
 using std::minmax_element;
 using std::vector;
-using std::cout;
-using std::endl;
 
 // A very intuitive way to solve the problem
 // Very old-fashioned, poor performance (must check all combinations)
@@ -32,7 +32,7 @@ int findRangeBad(vector<int> v) {
 }
 
 // Preprocess the data ahead of time!
-// Uses modern features (sort), and also reduces the problems performance to
+// Uses modern features (sort), and also reduces the problems overhead to
 // that of sort
 int findRangeBetter(vector<int> v) {
   // Sort the array using the STL
