@@ -17,10 +17,10 @@ using std::string;
 // conditional check is doing
 bool isPalindromeBad(const string &s) {
   // Get the size of the string
-  std::size_t size = s.size();
+  std::size_t len = s.length();
 
   // Get the stopping point for comparison
-  auto stop = size / 2;
+  auto stop = len / 2;
 
   // Check the first half of the string to the second half
   for (std::size_t i = 0; i < stop; i++) {
@@ -59,7 +59,7 @@ bool isPalindromeBest(const string &s) {
   // Size of the comparison is determined from the first two iterators,
   // so we don't have to pass rend(s) to the function.
   // We also don't need to create a temp variable
-  return equal(begin(s), end(s), rbegin(s));
+  return equal(begin(s), begin(s) + (s.length() / 2), rbegin(s));
 }
 
 int main() {
