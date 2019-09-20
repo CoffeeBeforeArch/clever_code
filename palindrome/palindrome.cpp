@@ -9,17 +9,16 @@
 using std::cout;
 using std::endl;
 using std::equal;
-using std::string;
 using std::reverse;
-using std::equal;
+using std::string;
 
-// Compares letters at the front to those at the back 
+// Compares letters at the front to those at the back
 // A little ugly! Not easily apparent what the purpose of the loop and
 // conditional check is doing
 bool isPalindromeBad(const string &s) {
   // Get the size of the string
   std::size_t size = s.size();
-  
+
   // Get the stopping point for comparison
   auto stop = size / 2;
 
@@ -36,11 +35,20 @@ bool isPalindromeBad(const string &s) {
   return true;
 }
 
-// A more intuitive way to solve the problem. We can just use reverse
-// the string and do an equality comparison
+// Let's just reverse the string and compare against it!
 // Slightly more expensive. Reverse has to do (last - first) / 2 swaps
-bool isPalindromeBetter(const string &s) {
-  return s == reverse(s);
+// We also have to create a temporary (input is const)
+bool isPalindromeBetter1(const string &s) {
+  string r(s);
+  reverse(begin(r), end(r));
+  return s == r;
+}
+
+// Similar to the previous solution, but we can just use reverse
+// iterators
+bool isPalindromeBetter2(const string &s) {
+  string r(rbegin(s), rend(s));
+  return s == r;
 }
 
 // As (almost) always, there's an STL function to the rescue
@@ -50,20 +58,25 @@ bool isPalindromeBest(const string &s) {
   // Use the equal function!
   // Size of the comparison is determined from the first two iterators,
   // so we don't have to pass rend(s) to the function.
+  // We also don't need to create a temp variable
   return equal(begin(s), end(s), rbegin(s));
 }
 
 int main() {
-  // Two strings
-  // One is a palindrome
+  // Our input palindrome
   string s1("rotor");
-  // One is not
-  string s2("candy");
 
   // Test each of our functions
   bool sol1 = isPalindromeBad(s1);
-  bool sol2 = isPalindromeBetter(s1);
-  bool sol3 = isPalindromeBest(s1);
+  bool sol2 = isPalindromeBetter1(s1);
+  bool sol3 = isPalindromeBetter2(s1);
+  bool sol4 = isPalindromeBest(s1);
 
+  // Print the solution
   cout << sol1 << endl;
+  cout << sol2 << endl;
+  cout << sol3 << endl;
+  cout << sol4 << endl;
+
+  return 0;
 }
