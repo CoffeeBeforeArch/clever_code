@@ -25,7 +25,7 @@ bool isPalindromeBad(const string &s) {
   // Check the first half of the string to the second half
   for (std::size_t i = 0; i < stop; i++) {
     // Compare both sides of the string and see if they are the same
-    if (s[i] != s[size - i - 1]) {
+    if (s[i] != s[len - i - 1]) {
       // If !=, it's not a palindrome
       return false;
     }
