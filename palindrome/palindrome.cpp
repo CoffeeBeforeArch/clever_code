@@ -54,11 +54,18 @@ bool isPalindromeBetter2(const string &s) {
 // As (almost) always, there's an STL function to the rescue
 // Will be better performance that reversal then comparison
 // No messy code like the first example
-bool isPalindromeBest(const string &s) {
+bool isPalindromeAlmostBest(const string &s) {
   // Use the equal function!
   // Size of the comparison is determined from the first two iterators,
   // so we don't have to pass rend(s) to the function.
   // We also don't need to create a temp variable
+  // Downside? This does s.length() comparisons...
+  return equal(begin(s), end(s), rbegin(s));
+}
+
+// Now let's apply the optimization from the first example!
+bool isPalindromeBest(const string &s) {
+  // Do half as many comparisons (s.length() / 2)
   return equal(begin(s), begin(s) + (s.length() / 2), rbegin(s));
 }
 
@@ -70,13 +77,15 @@ int main() {
   bool sol1 = isPalindromeBad(s1);
   bool sol2 = isPalindromeBetter1(s1);
   bool sol3 = isPalindromeBetter2(s1);
-  bool sol4 = isPalindromeBest(s1);
+  bool sol4 = isPalindromeAlmostBest(s1);
+  bool sol5 = isPalindromeBest(s1);
 
   // Print the solution
   cout << sol1 << endl;
   cout << sol2 << endl;
   cout << sol3 << endl;
   cout << sol4 << endl;
+  cout << sol5 << endl;
 
   return 0;
 }
