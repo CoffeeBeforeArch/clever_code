@@ -1,9 +1,20 @@
+// This program shows 3 ways for multiplying two vectors together and taking
+// the sum of all the products
+// By: Nick from CoffeeBeforeArch
+
+#include <execution>
 #include <functional>
 #include <iostream>
 #include <numeric>
 #include <vector>
 
-using namespace std;
+using std::cout;
+using std::endl;
+using std::inner_product;
+using std::multiplies;
+using std::plus;
+using std::transform_reduce;
+using std::vector;
 
 // Naive implementation of mulAndAccumulate
 // Uses our own hand-written for-loop
@@ -27,17 +38,21 @@ int goodMulAccumulate(vector<int> &v1, vector<int> v2) {
 }
 
 // Now we have an implementation we can parallelize and vectorize!
-int goodMulAccumulate17(vector<int> &v1, vector<int> &v2){
-  return transform_reduce(begin(v1), end(v1), begin(v2), 0, plus<int>(), multiplies<int>());
+int goodMulAccumulate17(vector<int> &v1, vector<int> &v2) {
+  return transform_reduce(std::execution::par_unseq, begin(v1), end(v1),
+                          begin(v2), 0, plus<int>(), multiplies<int>());
 }
 
 // Add parallelize and vectorize
 int main() {
+  // Declare and initialize our input vectors
   vector<int> v1 = {1, 2, 3, 4, 5};
   vector<int> v2 = {10, 100, 1000, 10000, 100000};
 
+  // Call our three implementations
   cout << badMulAccumulate(v1, v2) << endl;
   cout << goodMulAccumulate(v1, v2) << endl;
+  cout << goodMulAccumulate17(v1, v2) << endl;
 
   return 0;
 }
