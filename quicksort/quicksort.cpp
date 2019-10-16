@@ -76,7 +76,7 @@ void goodQuicksort(vector<int>::iterator first, vector<int>::iterator last) {
 
   // Partition to get all elements greater than the pivot
   auto mid_2 =
-      partition(mid_1, last, [pivot](const auto &em) { return !(pivot < em); });
+      partition(mid_1, last, [pivot](const auto &em) { return pivot == em; });
 
   // Recusive calls to quicksort until we are left with a single element
   goodQuicksort(first, mid_1);
