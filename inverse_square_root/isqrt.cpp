@@ -2,10 +2,10 @@
 // This was famously used in the videogame Quake III Arena
 // By: Nick from CoffeeBeforeArch
 
+#include <benchmark/benchmark.h>
+#include <immintrin.h>
 #include <cstring>
 #include <iostream>
-#include <immintrin.h>
-#include <benchmark/benchmark.h>
 
 // A UB implementation of the fast inverse square root function
 float Q_rsqrt_ub(float num) {
@@ -20,7 +20,6 @@ float Q_rsqrt_ub(float num) {
   // Type punning is bad!
   i = *(int *)&y;
   i = 0x5f3759df - (i >> 1);
-  
 
   // UB!
   // Type punning is bad!
@@ -43,7 +42,6 @@ float Q_rsqrt(float num) {
   // Optimizers can tell what we're trying to do!
   std::memcpy(&i, &y, sizeof(float));
   i = 0x5f3759df - (i >> 1);
-  
 
   // Copying the bits solves our problems
   // Optimizers can tell what we're trying to do!
@@ -54,17 +52,15 @@ float Q_rsqrt(float num) {
 }
 
 // Use intrinsic instead!
-__m128 Q_rsqrt(__m128 num) {
-  return _mm_rsqrt_ps(num);
-}
+__m128 Q_rsqrt(__m128 num) { return _mm_rsqrt_ps(num); }
 
 // Benchmark the UB implementation
-static void UBBench(benchmark::State &s){
+static void UBBench(benchmark::State &s) {
   float in[4] = {4.0f, 16.0f, 64.0f, 256.0f};
   volatile float out[4];
 
-  while(s.KeepRunning()){
-    for(int i = 0; i < 4; i++) {
+  while (s.KeepRunning()) {
+    for (int i = 0; i < 4; i++) {
       out[i] = Q_rsqrt_ub(in[i]);
     }
   }
@@ -72,12 +68,12 @@ static void UBBench(benchmark::State &s){
 BENCHMARK(UBBench);
 
 // Benchmark the well-defined implementation
-static void WDBench(benchmark::State &s){
+static void WDBench(benchmark::State &s) {
   float in[4] = {4.0f, 16.0f, 64.0f, 256.0f};
   volatile float out[4];
 
-  while(s.KeepRunning()){
-    for(int i = 0; i < 4; i++) {
+  while (s.KeepRunning()) {
+    for (int i = 0; i < 4; i++) {
       out[i] = Q_rsqrt(in[i]);
     }
   }
@@ -85,11 +81,11 @@ static void WDBench(benchmark::State &s){
 BENCHMARK(WDBench);
 
 // Benchmark the intrinsic implementation
-static void IntrinsicBench(benchmark::State &s){
+static void IntrinsicBench(benchmark::State &s) {
   __m128 in = _mm_set_ps(4.0f, 16.0f, 64.0f, 256.0f);
   volatile __m128 out;
 
-  while(s.KeepRunning()){
+  while (s.KeepRunning()) {
     out = Q_rsqrt(in);
   }
 }
